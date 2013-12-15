@@ -1,12 +1,11 @@
 ﻿using System;
-using Caliburn.Micro;
 using Humidity.Bootstrap;
 using Humidity.Infrastructure;
 using Humidity.Settings;
 
 namespace Humidity.Shell
 {
-    public class ShellViewModel : Screen, IShell
+    public class ShellViewModel : IShell
     {
         private readonly SettingsViewModel _settings;
 
@@ -14,8 +13,8 @@ namespace Humidity.Shell
         {
             _settings = settings;
 
-            Flyouts = new BindableCollection<FlyoutViewModel>();
-            Flyouts.Add(_settings);
+            //Flyouts = new BindableCollection<FlyoutViewModel>();
+            //Flyouts.Add(_settings);
         }
 
         public new string DisplayName
@@ -24,12 +23,12 @@ namespace Humidity.Shell
             set { }
         }
 
-        public IObservableCollection<FlyoutViewModel> Flyouts { get; private set; }
+        //public IObservableCollection<FlyoutViewModel> Flyouts { get; private set; }
 
-        public override void CanClose(Action<bool> callback)
-        {
-            App.Current.Shutdown();
-        }
+        //public override void CanClose(Action<bool> callback)
+        //{
+        //    App.Current.Shutdown();
+        //}
 
         public void ShowSettings()
         {

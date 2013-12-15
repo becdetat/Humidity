@@ -9,7 +9,7 @@
     </Window.Resources>
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
-            <Button Content="settings" cal:Message.Attach="ShowSettings" />
+            <Button Content="settings" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
     

@@ -4,32 +4,31 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Autofac;
-using Caliburn.Micro;
 
 namespace Humidity.Bootstrap
 {
-    public class AppBootstrapper : Bootstrapper<IShell>
+    public class AppBootstrapper
     {
         private IContainer _container;
 
-        protected override void Configure()
+        protected  void Configure()
         {
             _container = AutofacConfig.Register();
         }
 
-        protected override void BuildUp(object instance)
+        protected  void BuildUp(object instance)
         {
             _container.InjectProperties(instance);
         }
 
-        protected override object GetInstance(Type service, string key)
+        protected  object GetInstance(Type service, string key)
         {
             return !string.IsNullOrWhiteSpace(key)
                 ? _container.ResolveNamed(key, service)
                 : _container.Resolve(service);
         }
 
-        protected override IEnumerable<object> GetAllInstances(Type service)
+        protected  IEnumerable<object> GetAllInstances(Type service)
         {
             return _container.Resolve(typeof (IEnumerable<>).MakeGenericType(service)) as IEnumerable<object>;
         }
