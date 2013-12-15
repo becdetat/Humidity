@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Autofac;
 using Caliburn.Micro;
-using Humidity.ViewModels;
+using Humidity.Shell;
 using IContainer = Autofac.IContainer;
 
 namespace Humidity.Bootstrap

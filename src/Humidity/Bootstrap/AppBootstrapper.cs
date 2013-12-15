@@ -15,8 +15,6 @@ namespace Humidity.Bootstrap
         protected override void Configure()
         {
             _container = AutofacConfig.Register();
-
-            //ViewLocator.GetOrCreateViewType = GetOrCreateViewType;
         }
 
         protected override void BuildUp(object instance)
