@@ -1,8 +1,11 @@
-﻿using MahApps.Metro.Controls;
+﻿using Caliburn.Micro;
+using MahApps.Metro.Controls;
+using PropertyChanged;
 
 namespace Humidity.Infrastructure
 {
-    public abstract class FlyoutViewModel
+    [ImplementPropertyChanged]
+    public abstract class FlyoutViewModel : PropertyChangedBase
     {
         public string Header { get; set; }
         public bool IsOpen { get; set; }

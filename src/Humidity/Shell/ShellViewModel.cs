@@ -9,27 +9,21 @@ namespace Humidity.Shell
     public class ShellViewModel : Conductor<IScreen>.Collection.OneActive, IShell
     {
         private readonly SettingsViewModel _settings;
+        private readonly BindableCollection<FlyoutViewModel> _flyouts;
 
         public ShellViewModel(SettingsViewModel settings)
         {
             _settings = settings;
 
-            //Flyouts = new BindableCollection<FlyoutViewModel>();
-            //Flyouts.Add(_settings);
+            DisplayName = "Humidity";
+            _flyouts = new BindableCollection<FlyoutViewModel> {_settings};
         }
 
-        public new string DisplayName
+        public IObservableCollection<FlyoutViewModel> Flyouts
         {
-            get { return "Humidity"; }
-            set { }
+            get { return _flyouts; }
         }
-
-        //public IObservableCollection<FlyoutViewModel> Flyouts { get; private set; }
-
-        //public override void CanClose(Action<bool> callback)
-        //{
-        //    App.Current.Shutdown();
-        //}
+        public IObservableCollection<FlyoutViewModel> Flyouts2{get { return Flyouts; }}
 
         public void ShowSettings()
         {
