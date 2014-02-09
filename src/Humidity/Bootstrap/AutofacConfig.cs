@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using Autofac;
-using Humidity.Shell;
-using IContainer = Autofac.IContainer;
+using Caliburn.Micro;
 
 namespace Humidity.Bootstrap
 {
@@ -22,63 +17,55 @@ namespace Humidity.Bootstrap
                 typeof (IShell).Assembly
             };
 
-            builder.RegisterAssemblyTypes(assemblies);
+            builder.RegisterAssemblyTypes(assemblies)
+                .Where(t => !t.IsAbstract)
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+
             builder.RegisterAssemblyModules(assemblies);
 
-            builder.RegisterType<ShellViewModel>().AsImplementedInterfaces().InstancePerDependency();
+            // Register view models
+            builder.RegisterAssemblyTypes(AssemblySource.Instance.ToArray())
+                .Where(type => type.Name.EndsWith("ViewModel"))
+                .AsSelf()
+                .InstancePerDependency();
 
-            //RegisterViewModels(builder);
-            //RegisterViews(builder);
-            //RegisterWindowManager(builder);
-            //RegisterEventAggregator(builder);
+            RegisterViews(builder);
+
+            // Register window manager
+            builder
+                .Register<IWindowManager>(c => new WindowManager())
+                .InstancePerLifetimeScope();
+
+            // Register event aggregator
+            builder
+                .Register<IEventAggregator>(c => new EventAggregator())
+                .InstancePerLifetimeScope();
 
             return builder.Build();
         }
 
-        //private static void RegisterEventAggregator(ContainerBuilder builder)
-        //{
-        //    builder
-        //        .Register<IEventAggregator>(c => new EventAggregator())
-        //        .InstancePerLifetimeScope();
-        //}
-
-        //private static void RegisterWindowManager(ContainerBuilder builder)
-        //{
-        //    builder
-        //        .Register<IWindowManager>(c => new WindowManager())
-        //        .InstancePerLifetimeScope();
-        //}
-
-        //private static void RegisterViewModels(ContainerBuilder builder)
-        //{
-        //    builder.RegisterAssemblyTypes(AssemblySource.Instance.ToArray())
-        //        .Where(type => type.Name.EndsWith("ViewModel"))
-        //        .Where(type => type.IsAssignableTo<INotifyPropertyChanged>())
-        //        .AsSelf()
-        //        .InstancePerDependency();
-        //}
-
-        //private static void RegisterViews(ContainerBuilder builder)
-        //{
-        //    var themeResources = new ResourceDictionary
-        //    {
-        //        Source =
-        //            new Uri("pack://application:,,,/Resources/humiditytheme.xaml")
-        //    };
-        //    builder.RegisterAssemblyTypes(AssemblySource.Instance.ToArray())
-        //        .Where(type => type.Name.EndsWith("View"))
-        //        .AsSelf()
-        //        .InstancePerDependency()
-        //        .OnActivating(e =>
-        //        {
-        //            {
-        //                var frameworkElement = e.Instance as FrameworkElement;
-        //                if (frameworkElement != null)
-        //                {
-        //                    frameworkElement.Resources.MergedDictionaries.Add(themeResources);
-        //                }
-        //            }
-        //        });
-        //}
+        private static void RegisterViews(ContainerBuilder builder)
+        {
+            var themeResources = new ResourceDictionary
+            {
+                Source =
+                    new Uri("pack://application:,,,/Resources/humiditytheme.xaml")
+            };
+            builder.RegisterAssemblyTypes(AssemblySource.Instance.ToArray())
+                .Where(type => type.Name.EndsWith("View"))
+                .AsSelf()
+                .InstancePerDependency()
+                .OnActivating(e =>
+                {
+                    {
+                        var frameworkElement = e.Instance as FrameworkElement;
+                        if (frameworkElement != null)
+                        {
+                            frameworkElement.Resources.MergedDictionaries.Add(themeResources);
+                        }
+                    }
+                });
+        }
     }
 }

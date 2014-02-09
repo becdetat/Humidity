@@ -1,11 +1,12 @@
 ﻿using System;
+using Caliburn.Micro;
 using Humidity.Bootstrap;
 using Humidity.Infrastructure;
 using Humidity.Settings;
 
 namespace Humidity.Shell
 {
-    public class ShellViewModel : IShell
+    public class ShellViewModel : Conductor<IScreen>.Collection.OneActive, IShell
     {
         private readonly SettingsViewModel _settings;
 
