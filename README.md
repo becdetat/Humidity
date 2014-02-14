@@ -14,6 +14,7 @@ A WPF BitTorrent client
 - Configure path to persist .torrent files and download location
 - Pull in torrent library
   - https://github.com/mono/monotorrent (might have to fork it, looks a bit stale, [nuget package here](http://www.nuget.org/packages/MonoTorrent/))
+  - more on nuget - http://www.nuget.org/packages?q=torrent
 - Actually download torrents yay
 - Hook up speeds and progress bars
 - Facility to remove a selected torrent - just remove the torrent file from the list
