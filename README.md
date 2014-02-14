@@ -12,7 +12,8 @@ A WPF BitTorrent client
 - Add a .torrent file to the list of things
 - Persist list of torrents to local storage
 - Configure path to persist .torrent files and download location
-- Pull in torrent library - there's one in what is now Xamarin, I think it's in Xamarin's GH org
+- Pull in torrent library
+  - https://github.com/mono/monotorrent (might have to fork it, looks a bit stale, [nuget package here](http://www.nuget.org/packages/MonoTorrent/))
 - Actually download torrents yay
 - Hook up speeds and progress bars
 - Facility to remove a selected torrent - just remove the torrent file from the list
